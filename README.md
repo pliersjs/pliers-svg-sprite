@@ -1,4 +1,4 @@
-# pliers-svg-sprite
+# [pliers](https://pliersjs.github.io/)-svg-sprite
 
 Build an SVG sprite with PNG fallback from a folder of single SVGs.
 
