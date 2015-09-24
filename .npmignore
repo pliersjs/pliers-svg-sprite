@@ -18,3 +18,11 @@ Icon?
 
 # Test files
 /test
+
+coverage
+test
+.jscsrc
+.jshintignore
+.jshintrc
+.npmignore
+.travis.yml

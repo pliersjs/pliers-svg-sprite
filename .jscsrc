@@ -1,66 +1,28 @@
 {
   "excludeFiles": [
-    "node_modules/**"
+    "node_modules/**",
+    "coverage",
+    "coverage/*"
   ],
-  "requireLineFeedAtFileEnd": true,
-  "disallowMultipleLineBreaks": true,
-  "requireMultipleVarDecl": true,
+  "disallowCommaBeforeLineBreak": null,
   "disallowEmptyBlocks": true,
+  "disallowKeywordsOnNewLine": [ "else" ],
+  "disallowMultipleLineBreaks": true,
   "disallowSpaceAfterObjectKeys": true,
-  "disallowCommaBeforeLineBreak": true,
+  "disallowSpaceAfterPrefixUnaryOperators": [ "++", "--", "+", "-", "~", "!" ],
+  "disallowSpaceBeforeComma": true,
+  "disallowSpaceBeforePostfixUnaryOperators": [ "++", "--" ],
   "disallowTrailingWhitespace": true,
+  "maximumLineLength": { "value": 120, "allExcept": [ "regex", "urlComments" ] },
+  "maximumNumberOfLines": 500,
   "requireCapitalizedConstructors": true,
-  "requireSpacesInsideObjectBrackets": "all",
+  "requireLineFeedAtFileEnd": true,
+  "requireMultipleVarDecl": true,
+  "requireSpaceAfterBinaryOperators": [ "+", "-", "/", "*", "=", "==", "===", "!=", "!==" ],
+  "requireSpaceAfterKeywords": [ "if", "else", "for", "while", "do", "switch", "try", "catch" ],
+  "requireSpaceBeforeBinaryOperators": [ "+", "-", "/", "*", "=", "==", "===", "!=", "!==" ],
+  "requireSpacesInFunctionExpression": { "beforeOpeningCurlyBrace": true },
   "requireSpacesInsideArrayBrackets": "all",
-  "validateLineBreaks": "LF",
-  "requireSpaceBeforeBinaryOperators": [
-    "+",
-    "-",
-    "/",
-    "*",
-    "=",
-    "==",
-    "===",
-    "!=",
-    "!=="
-  ],
-  "requireSpaceAfterBinaryOperators": [
-    "+",
-    "-",
-    "/",
-    "*",
-    "=",
-    "==",
-    "===",
-    "!=",
-    "!=="
-  ],
-  "requireSpaceAfterKeywords": [
-    "if",
-    "else",
-    "for",
-    "while",
-    "do",
-    "switch",
-    "try",
-    "catch"
-  ],
-  "disallowSpaceAfterPrefixUnaryOperators": [
-    "++",
-    "--",
-    "+",
-    "-",
-    "~",
-    "!"
-  ],
-  "disallowSpaceBeforePostfixUnaryOperators": [
-    "++",
-    "--"
-  ],
-  "disallowKeywordsOnNewLine": [
-    "else"
-  ],
-  "requireSpacesInFunctionExpression": {
-    "beforeOpeningCurlyBrace": true
-  }
+  "requireSpacesInsideObjectBrackets": "all",
+  "validateLineBreaks": "LF"
 }

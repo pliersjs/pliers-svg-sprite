@@ -1,25 +1,41 @@
 {
   "name": "pliers-svg-sprite",
   "version": "0.1.0",
-  "description": "",
+  "description": "Pliers wrapper for svg-sprite",
   "author": "Jack Brewer",
-  "main": "pliers-svg-sprite.js",
+  "license": "BSD",
   "repository": {
     "type": "git",
     "url": "https://github.com/pliersjs/pliers-svg-sprite.git"
   },
-  "scripts": {
-    "lint": "jshint ."
-  },
   "publishConfig": {
     "registry": "http://registry.npmjs.org"
   },
-  "dependencies": {
-    "svg-sprite": "jackbrewer/svg-sprite",
-    "svg-to-png": "^0.6.0"
+  "main": "pliers-svg-sprite.js",
+  "scripts": {
+    "lint": "jshint .",
+    "checkStyle": "jscs .",
+    "pretest": "npm run lint && npm run checkStyle",
+    "test": "istanbul cover _mocha -- -R spec",
+    "posttest": "istanbul check-coverage && rm -rf coverage",
+    "prepublish": "npm test && npm prune"
   },
-  "license": "BSD",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "dependencies": {
+    "glob": "^5.0.14",
+    "mkdirp": "^0.5.1",
+    "svg-sprite": "^1.2.10",
+    "svg-to-png": "^2.0.1"
+  },
   "devDependencies": {
-    "jshint": "^2.5.5"
+    "async": "^1.4.2",
+    "istanbul": "^0.3.10",
+    "jscs": "^2.1.1",
+    "jshint": "^2.5.5",
+    "mocha": "^2.3.3",
+    "pliers": "^1.2.1",
+    "rimraf": "^2.4.3"
   }
 }
