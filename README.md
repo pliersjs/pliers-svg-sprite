@@ -46,4 +46,4 @@ An updated Stylus template is required ([Example template](test/fixtures/stylus/
 Hover state functionality has been removed to reduce code complexity, and improve developer control. Any legacy icons with filenames ending in `--hover` will need bespoke hover states applied on a pre-project basis as part of the upgrade.
 
 ## Licence
-Licensed under the [New BSD License](http://opensource.org/licenses/bsd-license.php)
+ISC
