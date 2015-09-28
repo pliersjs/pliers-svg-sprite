@@ -1,12 +1,13 @@
 var join = require('path').join
   , assert = require('assert')
+  , rewire = require('rewire')
   , createPliers = require('pliers').bind(null, { logLevel: 'fatal' })
-  , pliersSvgSprite = require('../pliers-svg-sprite')
+  , pliersSvgSprite = rewire('../pliers-svg-sprite')
   , rmdir = require('rimraf')
   , mkdir = require('mkdirp')
   , fs = require('fs')
   , fixturesDir = join(__dirname, 'fixtures')
-  , tempDir = join(__dirname, 'tmp')
+  , tempDir = join(__dirname, 'temp')
   , async = require('async')
 
 describe('pliers-svg-sprite', function () {
@@ -80,6 +81,29 @@ describe('pliers-svg-sprite', function () {
         , checkFileExists.bind(null, config.stylusDest)
         ], done)
 
+    })
+  })
+
+  it('should error if svg-sprite returns an error', function (done) {
+    var pliers = createPliers()
+      , config =
+        { imgSourceDir: fixturesDir + '/images'
+        , imgOutputDir: tempDir + '/images'
+        , stylusTemplate: fixturesDir + '/stylus/sprite.styl.tpl'
+        , stylusDest: tempDir + '/sprite.styl'
+        }
+      , destroy = pliersSvgSprite.__set__('SVGSpriter', function () {
+          return (
+            { add: function () { return }
+            , compile: function (cb) { return cb(new Error('SVG Sprite returned an error')) }
+            })
+        })
+
+    pliers('buildSprite', pliersSvgSprite(pliers, config))
+    pliers.run('buildSprite', function (error) {
+      assert.equal(error.message, 'SVG Sprite returned an error')
+      destroy()
+      done()
     })
   })
 
