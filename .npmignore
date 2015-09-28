@@ -21,9 +21,10 @@ Icon?
 
 coverage
 test
-.jscsrc
-.jshintignore
-.jshintrc
+
 .npmignore
 .travis.yml
+
 .editorconfig
+.eslintignore
+.eslintrc

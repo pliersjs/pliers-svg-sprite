@@ -5,7 +5,7 @@ var SVGSpriter = require('svg-sprite')
   , mkdirp = require('mkdirp')
   , svgToPng = require('svg-to-png')
 
-module.exports = function(pliers, config) {
+module.exports = function (pliers, config) {
 
   // Check supplied arguments
   if (!pliers) throw new Error('No pliers argument supplied.')
@@ -41,7 +41,7 @@ module.exports = function(pliers, config) {
         }
       , spriter = new SVGSpriter(options)
 
-    files.forEach(function(file) {
+    files.forEach(function (file) {
       spriter.add(
         path.resolve(path.join(imgSourceDir, file))
       , file
@@ -49,29 +49,30 @@ module.exports = function(pliers, config) {
       )
     })
 
-    fs.exists(config.stylusTemplate, function(exists) {
-      if (!exists) {
-        done(new Error('Sprite template not found.'))
-      } else {
-        spriter.compile(callback)
-      }
+    fs.exists(config.stylusTemplate, function (exists) {
+      if (!exists) return done(new Error('Sprite template not found.'))
+
+      spriter.compile(saveFiles)
     })
 
-    function callback(error, result) {
-      if (error) done(error)
+    function saveFiles (error, result) {
+      if (error) return done(error)
+
+      var mode, type
 
       // Run through all configured output modes
-      for (var mode in result) {
+      for (mode in result) {
 
         // Run through all created resources and write them to disk
-        for (var type in result[mode]) {
+        for (type in result[mode]) {
           mkdirp.sync(path.dirname(result[mode][type].path))
           fs.writeFileSync(result[mode][type].path, result[mode][type].contents)
         }
+
       }
 
       // Read output dir for SVGs then write PNGs to the same place
-      svgToPng.convert(imgOutputDir, imgOutputDir).then( function() {
+      svgToPng.convert(imgOutputDir, imgOutputDir).then(function () {
         done()
       })
     }

@@ -13,7 +13,7 @@ describe('pliers-svg-sprite', function () {
 
   beforeEach('copy fixtures to temp', function (done) {
     rmdir(tempDir, function () {
-      mkdir(tempDir, function() {
+      mkdir(tempDir, function () {
         done()
       })
     })
@@ -64,7 +64,7 @@ describe('pliers-svg-sprite', function () {
         , stylusDest: tempDir + '/stylus/sprite.styl'
         }
     pliers('buildSprite', pliersSvgSprite(pliers, config))
-    pliers.run('buildSprite', function(error) {
+    pliers.run('buildSprite', function (error) {
       if (error) return done(error)
 
       function checkFileExists (file, done) {
