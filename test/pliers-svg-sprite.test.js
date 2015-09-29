@@ -84,6 +84,40 @@ describe('pliers-svg-sprite', function () {
     })
   })
 
+  it('should build Stylus in the expected format', function (done) {
+    this.timeout(10000)
+    var pliers = createPliers()
+      , config =
+        { imgSourceDir: fixturesDir + '/images'
+        , imgOutputDir: tempDir + '/images'
+        , stylusTemplate: fixturesDir + '/stylus/sprite.styl.tpl'
+        , stylusDest: tempDir + '/stylus/sprite.styl'
+        }
+    pliers('buildSprite', pliersSvgSprite(pliers, config))
+    pliers.run('buildSprite', function (error) {
+      if (error) return done(error)
+
+      function readFile (file, cb) {
+        fs.readFile(file, 'utf-8', function (error, data) {
+          if (error) return done(error)
+          cb(null, data)
+        })
+      }
+
+      function compareFiles (error, results) {
+        if (error) return done(error)
+        assert.equal(results.expected, results.generated)
+        done()
+      }
+
+      async.parallel(
+        { generated: readFile.bind(null, fixturesDir + '/stylus/sprite.expected.styl')
+        , expected: readFile.bind(null, config.stylusDest)
+        }, compareFiles)
+
+    })
+  })
+
   it('should error if svg-sprite returns an error', function (done) {
     var pliers = createPliers()
       , config =
