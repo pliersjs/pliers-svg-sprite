@@ -58,7 +58,9 @@ module.exports = function (pliers, config) {
     function saveFiles (error, result) {
       if (error) return done(error)
 
-      var mode, type
+      var mode
+        , type
+        , outputSvgFile = result.css.sprite.path
 
       // Run through all configured output modes
       for (mode in result) {
@@ -71,8 +73,8 @@ module.exports = function (pliers, config) {
 
       }
 
-      // Read output dir for SVGs then write PNGs to the same place
-      svgToPng.convert(imgOutputDir, imgOutputDir).then(function () {
+      // Convert generated SVG sprite to PNG and output in same directory
+      svgToPng.convert(outputSvgFile, imgOutputDir).then(function () {
         done()
       })
     }
