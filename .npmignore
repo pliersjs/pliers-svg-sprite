@@ -18,3 +18,13 @@ Icon?
 
 # Test files
 /test
+
+coverage
+test
+
+.npmignore
+.travis.yml
+
+.editorconfig
+.eslintignore
+.eslintrc

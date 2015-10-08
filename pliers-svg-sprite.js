@@ -1,67 +1,82 @@
-var SVGSprite = require('svg-sprite')
-  , svgToPng = require('svg-to-png')
+var SVGSpriter = require('svg-sprite')
+  , glob = require('glob')
+  , path = require('path')
   , fs = require('fs')
+  , mkdirp = require('mkdirp')
+  , svgToPng = require('svg-to-png')
 
-module.exports = function(pliers, spriteConfig) {
+module.exports = function (pliers, config) {
+
+  // Check supplied arguments
+  if (!pliers) throw new Error('No pliers argument supplied.')
+  if (!config) throw new Error('No config argument supplied.')
 
   return function (done) {
 
-    var imgSourceDir = spriteConfig.imgSourceDir
-      , imgOutputDir = spriteConfig.imgOutputDir
+    var imgSourceDir = config.imgSourceDir
+      , imgOutputDir = config.imgOutputDir
+      , files = glob.glob.sync('**/*.svg', { cwd: imgSourceDir })
       , options =
-        { render:
-          { css: false
-          , styl:
-            { dest: spriteConfig.stylusDest
-            , template: spriteConfig.stylusTemplate
+        { dest: imgOutputDir
+        , shape:
+          { spacing:
+            { padding: 2
             }
           }
-        , variables: { replacedExpression: replacedExpression }
-        , verbose: 0
-        , padding: 2
-        , common: 'icon'
-        , prefix: 'icon-'
-        , sprite: 'icon-sprite'
-        , spritedir: ''
+        , mode:
+          { css:
+            { dest: imgOutputDir
+            , common: 'icon'
+            , prefix: 'icon--'
+            , sprite: 'icon-sprite'
+            , bust: false
+            , render:
+              { styl:
+                { template: config.stylusTemplate
+                , dest: config.stylusDest
+                }
+              }
+            }
+          }
         }
+      , spriter = new SVGSpriter(options)
 
-    fs.exists(spriteConfig.stylusTemplate, function(exists) {
-      if (!exists) {
-        pliers.logger.error('Sprite template not found.')
-        done()
-      } else {
-        SVGSprite.createSprite(imgSourceDir, imgOutputDir, options, callback)
-      }
+    files.forEach(function (file) {
+      spriter.add(
+        path.resolve(path.join(imgSourceDir, file))
+      , file
+      , fs.readFileSync(path.join(imgSourceDir, file), { encoding: 'utf-8' })
+      )
     })
 
-    function replacedExpression() {
-      if ( this.expression.indexOf('--hover') !== -1 ) {
-        return '.btn:hover .' + this.expression.replace('--hover', '') +
-          ', .btn:focus .' + this.expression.replace('--hover', '') +
-          ', .text-btn:hover .' + this.expression.replace('--hover', '') +
-          ', .text-btn:focus .' + this.expression.replace('--hover', '')
-      } else {
-        return '.' + this.expression
+    fs.exists(config.stylusTemplate, function (exists) {
+      if (!exists) return done(new Error('Sprite template not found.'))
+
+      spriter.compile(saveFiles)
+    })
+
+    function saveFiles (error, result) {
+      if (error) return done(error)
+
+      var mode, type
+
+      // Run through all configured output modes
+      for (mode in result) {
+
+        // Run through all created resources and write them to disk
+        for (type in result[mode]) {
+          mkdirp.sync(path.dirname(result[mode][type].path))
+          fs.writeFileSync(result[mode][type].path, result[mode][type].contents)
+        }
+
       }
-    }
 
-    function callback(err, results) {
-      if (err) done(err)
-
-      if (!results.success) {
-        pliers.logger.error('SVG sprite could no be created')
-        done()
-      }
-
-      pliers.logger.info('SVG sprite Created')
-      pliers.logger.debug('Compiled SVG sprite from ' + results.data.svg.length + ' images')
-
-      svgToPng.convert(imgOutputDir, imgOutputDir).then( function() {
-        pliers.logger.info('PNG sprite Created')
+      // Read output dir for SVGs then write PNGs to the same place
+      svgToPng.convert(imgOutputDir, imgOutputDir).then(function () {
         done()
       })
-
     }
 
   }
+
 }
