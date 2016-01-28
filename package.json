@@ -27,7 +27,7 @@
     "glob": "^5.0.14",
     "mkdirp": "^0.5.1",
     "svg-sprite": "^1.2.10",
-    "svg-to-png": "^2.0.1"
+    "svg2png": ">=2.1.0 <3.0.0"
   },
   "devDependencies": {
     "async": "^1.4.2",
