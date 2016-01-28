@@ -4,7 +4,7 @@ Build an SVG sprite with PNG fallback from a folder of single SVGs.
 
 [![build status](https://secure.travis-ci.org/pliersjs/pliers-svg-sprite.png)](http://travis-ci.org/pliersjs/pliers-svg-sprite)
 
-Uses [SVG Sprite](https://www.npmjs.org/package/svg-sprite) and [SVG to PNG](https://www.npmjs.org/package/svg-to-png) under the hood.
+Uses [svg-sprite](https://www.npmjs.org/package/svg-sprite) and [svg2png](https://www.npmjs.org/package/svg2png) under the hood.
 
 ## Installation
 
