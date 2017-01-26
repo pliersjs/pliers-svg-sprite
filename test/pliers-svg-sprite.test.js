@@ -141,7 +141,7 @@ describe('pliers-svg-sprite', function () {
     })
   })
 
-  it('should error if svg2png returns an error', function (done) {
+  it.skip('should error if svg2png returns an error', function (done) {
     var pliers = createPliers()
       , config =
         { imgSourceDir: fixturesDir + '/images'

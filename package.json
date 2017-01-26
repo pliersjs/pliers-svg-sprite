@@ -21,13 +21,14 @@
     "prepublish": "npm test && npm prune"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=6.0.0"
   },
   "dependencies": {
     "glob": "^5.0.14",
     "mkdirp": "^0.5.1",
+    "pn": "^1.0.0",
     "svg-sprite": "^1.2.10",
-    "svg2png": ">=2.1.0 <3.0.0"
+    "svg2png": "^4.1.1"
   },
   "devDependencies": {
     "async": "^1.4.2",

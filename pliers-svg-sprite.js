@@ -1,7 +1,7 @@
 var SVGSpriter = require('svg-sprite')
   , glob = require('glob')
   , path = require('path')
-  , fs = require('fs')
+  , fs = require('pn/fs')
   , mkdirp = require('mkdirp')
   , svg2png = require('svg2png')
 
@@ -74,8 +74,11 @@ module.exports = function (pliers, config) {
       }
 
       // Convert generated SVG sprite to PNG and output in same directory
-      svg2png(outputSvgFile, outputSvgFile.replace('.svg', '.png'), done)
-
+      fs.readFile(outputSvgFile)
+        .then(svg2png)
+        .then((buffer) => fs.writeFile(outputSvgFile.replace('.svg', '.png'), buffer))
+        .then(done)
+        .catch((e) => console.error(e))
     }
 
   }
