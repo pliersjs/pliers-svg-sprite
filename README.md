@@ -1,5 +1,9 @@
 # [pliers](https://pliersjs.github.io/)-svg-sprite
 
+As of 2.0.0, Node 6+ is required due to the svg2png dependency
+
+---
+
 Build an SVG sprite with PNG fallback from a folder of single SVGs.
 
 [![build status](https://secure.travis-ci.org/pliersjs/pliers-svg-sprite.png)](http://travis-ci.org/pliersjs/pliers-svg-sprite)
