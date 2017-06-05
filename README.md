@@ -1,5 +1,7 @@
 # [pliers](https://pliersjs.github.io/)-svg-sprite
 
+As of 3.0.0, the PNG fallback functionality is removed, re-enabling support for earlier node versions. As IE8 has fallen off most project’s testing radars, this shouldn’t be an issue. It also drops the huge PhantomJS dependency that svg2png brought with it.
+
 As of 2.0.0, Node 6+ is required due to the svg2png dependency
 
 ---

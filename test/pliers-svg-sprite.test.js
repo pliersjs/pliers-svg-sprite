@@ -77,7 +77,6 @@ describe('pliers-svg-sprite', function () {
 
       async.parallel(
         [ checkFileExists.bind(null, config.imgOutputDir + '/icon-sprite.svg')
-        , checkFileExists.bind(null, config.imgOutputDir + '/icon-sprite.png')
         , checkFileExists.bind(null, config.stylusDest)
         ], done)
 
@@ -136,27 +135,6 @@ describe('pliers-svg-sprite', function () {
     pliers('buildSprite', pliersSvgSprite(pliers, config))
     pliers.run('buildSprite', function (error) {
       assert.equal(error.message, 'SVG Sprite returned an error')
-      destroy()
-      done()
-    })
-  })
-
-  it.skip('should error if svg2png returns an error', function (done) {
-    var pliers = createPliers()
-      , config =
-        { imgSourceDir: fixturesDir + '/images'
-        , imgOutputDir: tempDir + '/images'
-        , stylusTemplate: fixturesDir + '/stylus/sprite.styl.tpl'
-        , stylusDest: tempDir + '/sprite.styl'
-        }
-      , destroy = pliersSvgSprite.__set__('svg2png', function (a, b, cb) {
-          cb(new Error('svg2png returned an error'))
-        })
-
-    pliers('buildSprite', pliersSvgSprite(pliers, config))
-
-    pliers.run('buildSprite', function (error) {
-      assert.equal(error.message, 'svg2png returned an error')
       destroy()
       done()
     })

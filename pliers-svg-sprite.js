@@ -3,7 +3,6 @@ var SVGSpriter = require('svg-sprite')
   , path = require('path')
   , fs = require('pn/fs')
   , mkdirp = require('mkdirp')
-  , svg2png = require('svg2png')
 
 module.exports = function (pliers, config) {
 
@@ -60,7 +59,6 @@ module.exports = function (pliers, config) {
 
       var mode
         , type
-        , outputSvgFile = result.css.sprite.path
 
       // Run through all configured output modes
       for (mode in result) {
@@ -73,12 +71,8 @@ module.exports = function (pliers, config) {
 
       }
 
-      // Convert generated SVG sprite to PNG and output in same directory
-      fs.readFile(outputSvgFile)
-        .then(svg2png)
-        .then((buffer) => fs.writeFile(outputSvgFile.replace('.svg', '.png'), buffer))
-        .then(done)
-        .catch((e) => console.error(e))
+      done()
+
     }
 
   }
